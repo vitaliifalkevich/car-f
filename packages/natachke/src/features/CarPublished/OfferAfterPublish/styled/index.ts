@@ -1,0 +1,8 @@
+export { default as Container } from './Container'
+export { default as Title } from './Title'
+export { default as Description } from './Description'
+export { default as PeriodPlacement } from './PeriodPlacement'
+export { default as Price } from './Price'
+export { default as ButtonWrapper } from './ButtonWrapper'
+export { default as AcceptTermsAndConditions } from './AcceptTermsAndConditions'
+export { default as BadgeWrapper } from './BadgeWrapper'

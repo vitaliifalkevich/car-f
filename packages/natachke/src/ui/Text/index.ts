@@ -1,0 +1,7 @@
+export { default as PageTitle } from './PageTitle'
+export { default as Paragraph } from './Paragraph'
+export { default as Text } from './Text'
+export { default as LegacyText } from './LegacyText'
+export { default as TextLink } from './TextLink'
+export { default as SecondTitle } from './SecondTitle'
+export { default as SecondaryText } from './SecondaryText'

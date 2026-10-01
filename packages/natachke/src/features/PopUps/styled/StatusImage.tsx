@@ -1,0 +1,11 @@
+import styled from 'styled-components'
+
+const StatusImage = styled.img`
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`
+
+export default StatusImage

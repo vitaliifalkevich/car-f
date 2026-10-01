@@ -1,0 +1,6 @@
+export { default as Container } from './Container'
+export { default as Content } from './Content'
+export { default as Title } from './Title'
+export { default as Description } from './Description'
+export { default as SecondDescription } from './SecondDescription'
+export { default as BottomDescription } from './BottomDescription'

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Generate source
+java -jar openapi-generator-cli.jar generate -o ./generated_code -i ../natachke-api-client/openapi.yaml --package-name=natachke-api-client -g typescript-axios
+for FILE in .openapi-generator .gitignore .npmignore .openapi-generator-ignore api.ts common.ts
+do
+  cp -R ./generated_code/$FILE ../natachke-api-client
+done

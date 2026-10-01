@@ -1,0 +1,5 @@
+export { default as User } from './User'
+export { default as Text } from './Text'
+export { default as UserName } from './UserName'
+export { default as Location } from './Location'
+export { default as UserContainer } from './UserContainer'

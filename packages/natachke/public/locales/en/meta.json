@@ -1,0 +1,56 @@
+{
+  "default": {
+    "title": "Natachke | Buy low - sell high!",
+    "description": "Natachke | Easy selling and advantageous buying new and used cars. Modern cars market. Search in the database of the car selling.",
+    "keywords": "cars, new cars, used cars, tachka, na tachke, Natachke, auto, car market, car catalogue",
+    "shortAppName": "Natachke"
+  },
+  "home": {
+    "title": "Natachke | Buy low - sell high!",
+    "description": "Natachke | Easy selling and advantageous buying new and used cars. Modern cars market. Search in the database of the car selling.",
+    "keywords": "cars, new cars, used cars, tachka, na tachke, Natachke, auto, car market, car catalogue",
+    "shortAppName": "Natachke"
+  },
+  "car": {
+    "title": "Natachke | Sell {{brand}} {{model}} {{year}} {{fuel}} {{engineVolume}} {{body}} {{type}} {{price}}",
+    "description": "Sell on Natachke {{brand}} {{model}} {{year}} year, {{body}} {{color}} color, engine {{fuel}} {{engineVolume}}, mileage {{mileage}} th. km. Price: {{price}}. Seller {{sellerName}}",
+    "keywords": "Car selling, cars, {{region}}, {{brand}}, {{model}}, {{body}}, {{shortDescription}}, mileage {{mileage}} th. km, engine {{fuel}}, engine volume {{engineVolume}}, transmission {{transmission}}",
+    "shortAppName": "Natachke"
+  },
+  "search": {
+    "title": "Natachke | Modern search of cars. Easy and comfortable search of cars for buying",
+    "description": "Natachke | Modern and comfortable search of used and new cars by params",
+    "keywords": "car search, search used cars, car, car selling, cars, catalogue of cars, buy car from hands",
+    "shortAppName": "Natachke"
+  },
+  "advancedSearch": {
+    "title": "Natachke | Extended search of cars. Easy and comfortable search of cars for buying",
+    "description": "Natachke | Extended search of used and new cars by params",
+    "keywords": "car search, search used cars, car, car selling, cars, catalogue of cars, buy car from hands, extended search of cars",
+    "shortAppName": "Natachke"
+  },
+  "topCatalog": {
+    "title": "Natachke | TOP catalogue of cars",
+    "description": "Natachke | TOP catalogue of cars. TOP new and used cars",
+    "keywords": "top cars, vip catalogue cars, vip cars, paid catalogue tachka, na tachke, Natachke, top catalogue tachka, top catalogue used cars, top catalogue new cars",
+    "shortAppName": "Natachke"
+  },
+  "sellCar": {
+    "title": "Natachke | Sell car",
+    "description": "Natachke | place, advertise for the sale of a car, free car placement on the site. You can advertise a car for sale, it will be seen by tens of thousands of car buyers.",
+    "keywords": "advertise a car for sale, advertise a car, post a free car ad, post a free car sale ad, place a free car sale ad",
+    "shortAppName": "Natachke"
+  },
+  "terms": {
+    "title": "Natachke | Terms and conditions",
+    "description": "Natachke | Terms and conditions of using the website",
+    "keywords": "cars, new cars, used cars, tachka, na tachke, Natachke, auto, car market, car catalogue",
+    "shortAppName": "Natachke"
+  },
+  "privacyPolicy": {
+    "title": "Natachke | Privacy policy",
+    "description": "Natachke | Privacy policy",
+    "keywords": "cars, new cars, used cars, tachka, natachke, na tachke, auto, car market, car catalogue",
+    "shortAppName": "Natachke"
+  }
+}

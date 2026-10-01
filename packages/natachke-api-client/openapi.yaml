@@ -1,0 +1,3816 @@
+openapi: 3.0.0
+info:
+  description: |
+    Full documentation can be found here
+    [https://docs.natachke.com/](https://docs.natachke.com/)
+  version: '1.0.0'
+  title: Natachke Frontend API
+  termsOfService: 'http://swagger.io/terms/'
+servers:
+  - description: Natachke API
+    url: 'https://api.natachke.com/api/'
+
+tags:
+  - name: Initial
+    description: Returns intitial project data
+  - name: User
+    description: User API
+  - name: Car
+    description: Car API
+  - name: Views
+    description: Car views API
+  - name: Status
+    description: Status API
+  - name: Images
+    description: Images API
+  - name: Complaint
+    description: Complaint API
+  - name: Offer
+    description: Offer API
+  - name: Geo
+    description: Geo API
+  - name: Favorites
+    description: Favorites API
+  - name: Deposit
+    description: Deposit API
+  - name: Service
+    description: Service API
+
+paths:
+  /get-csrf-token:
+    get:
+      tags:
+        - Initial
+      summary: Returns the csrf roken.
+      operationId: generateCsrfToken
+      responses:
+        '200':
+          description: Returns the csrf token.
+          content:
+            application/json:
+              example:
+                csrfToken: "3454r4ogk03j4rj35-54354"
+  /user/check-available-email:
+    post:
+      tags:
+        - User
+      summary: Check email
+      operationId: checkEmail
+      requestBody:
+        description: Check email
+        required: true
+        content:
+          application/json:
+            schema:
+              title: check user`s email
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: user`s email
+      responses:
+        '201':
+          description: success register
+          content:
+            aplication/json:
+              example:
+                result: ok
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+
+  /user/register:
+    post:
+      tags:
+        - User
+      summary: Register user
+      operationId: registerUser
+      requestBody:
+        description: Register User
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUserPayload'
+      responses:
+        '201':
+          description: success register
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterUserResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /user/login:
+    post:
+      tags:
+        - User
+      summary: Login user
+      operationId: logIn
+      requestBody:
+        description: Login User
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUserPayload'
+      responses:
+        '201':
+          description: success login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUserResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /user:
+    get:
+      tags:
+        - User
+      summary: Get user
+      operationId: getUser
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: success get user response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUserResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+    patch:
+      tags:
+        - User
+      summary: Update user
+      operationId: updateUser
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Update User
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserPayload'
+      responses:
+        '201':
+          description: success update user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUserResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /user/delete:
+    post:
+      tags:
+        - User
+      summary: Delete user
+      operationId: deleteUser
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Delete User
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteUserPayload'
+      responses:
+        '201':
+          description: success delete user
+          content:
+            aplication/json:
+              example:
+                result: ok
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /user/avatar:
+    put:
+      tags:
+        - User
+      summary: Set avatar
+      operationId: setAvatar
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Set avatar
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SetAvatarPayload'
+      responses:
+        '201':
+          description: success settings avatar
+          content:
+            application/json:
+              example:
+                result: ok
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+    delete:
+      tags:
+        - User
+      summary: Delete avatar
+      operationId: deleteAvatar
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '201':
+          description: success delete avatar
+          content:
+            application/json:
+              schema:
+                example:
+                  result: ok
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /user/password:
+    put:
+      tags:
+        - User
+      summary: Change password
+      operationId: changePassword
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Change Password
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordPayload'
+      responses:
+        '201':
+          description: success change password
+          content:
+            application/json:
+              example:
+                result: ok
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+
+  /user/confirm-email-code:
+    get:
+      tags:
+        - User
+      summary: Get email code confirmation
+      operationId: getEmailCodeConfirmation
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: success email code confirmation
+          content:
+            application/json:
+              example:
+                result: ok
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+
+  /user/confirm-email:
+    post:
+      tags:
+        - User
+      summary: Confirm email
+      operationId: confirmEmail
+      requestBody:
+        description: Confirm email
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmEmailPayload'
+      responses:
+        '201':
+          description: success confirm email
+          content:
+            application/json:
+              example:
+                result: ok
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /user/reset-password:
+    post:
+      tags:
+        - User
+      summary: Reset password
+      operationId: resetPassword
+      requestBody:
+        description: Reset password
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordPayload'
+      responses:
+        '201':
+          description: success reset password
+          content:
+            application/json:
+              example:
+                result: ok
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+    put:
+      tags:
+        - User
+      summary: Set new password with token
+      operationId: setNewPasswordWithToken
+      requestBody:
+        description: Set new password with token
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetNewPasswordTokenPayload'
+      responses:
+        '201':
+          description: success set new password by token
+          content:
+            application/json:
+              example:
+                result: ok
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /user/subscribe-email:
+    post:
+      tags:
+        - User
+      summary: Subscribe to mailing
+      operationId: subscribeEmail
+      requestBody:
+        description: Subscriber Email
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribeEmailPayload'
+      responses:
+        '201':
+          description: success update mailing settings
+          content:
+            application/json:
+              example:
+                result: ok
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+
+  /user/mailing:
+    get:
+      tags:
+        - User
+      summary: Get mailing settings
+      operationId: getMailingSettings
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Success gettings  mailing data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailingSettingsResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+    patch:
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: Update mailing settings
+      operationId: updateMailingSettings
+      requestBody:
+        description: Update mailing settings
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMailingSettingsPayload'
+      responses:
+        '201':
+          description: success update mailing settings
+          content:
+            application/json:
+              example:
+                result: ok
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/options/{country_code}:
+    get:
+      tags:
+        - Car
+      summary: Get car initial options
+      operationId: getCarOptions
+      parameters:
+        - name: country_code
+          in: path
+          description: Country code
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: success car options
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarInitialOptionsResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/models/{brand}:
+    get:
+      tags:
+        - Car
+      summary: Get car models by brand
+      operationId: getCarModelsByBrand
+      parameters:
+        - name: brand
+          in: path
+          description: Car brand
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: success get car models by brand
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCarModelsByBrandResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/create:
+    post:
+      tags:
+        - Car
+      summary: Create car
+      operationId: createCar
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Create new car
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCarPayload'
+      responses:
+        '200':
+          description: success create car
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCarResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/edit/my/{carUrl}:
+    get:
+      tags:
+        - Car
+      summary: Get car info
+      operationId: getEditMyCarInfo
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: carUrl
+          in: path
+          description: Car id
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: success car info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarInfoEditResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/edit:
+    patch:
+      tags:
+        - Car
+      summary: Edit car
+      operationId: editCar
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Edit existed car
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditCarPayload'
+      responses:
+        '200':
+          description: success edit car
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarInfoResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/delete:
+    post:
+      tags:
+        - Car
+      summary: Delete car
+      operationId: deleteCar
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Delete existed car
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteCarPayload'
+      responses:
+        '201':
+          description: success delete car
+          content:
+            aplication/json:
+              example:
+                result: ok
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/info/{carUrl}:
+    get:
+      tags:
+        - Car
+      summary: Get car info
+      operationId: getCarInfo
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: carUrl
+          in: path
+          description: Car url
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: success car info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarInfoResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/seller-cars/{sellerId}:
+    get:
+      tags:
+        - Car
+      summary: Get seller cars
+      operationId: getSellerCars
+      parameters:
+        - name: sellerId
+          in: path
+          description: Seller id
+          required: true
+          schema:
+            type: number
+      responses:
+        '201':
+          description: success car info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SellerCarsReponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/my:
+    get:
+      tags:
+        - Car
+      summary: Get my cars
+      operationId: getMyCars
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: success get my cars
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyCarsResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/search:
+    post:
+      tags:
+        - Car
+      summary: Search  cars
+      operationId: searchCars
+      requestBody:
+        description: Search cars
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchCarsPayload'
+      responses:
+        '201':
+          description: success search cars
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchCarsFullResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/latest:
+    get:
+      tags:
+        - Car
+      summary: Get latest cars
+      operationId: getLatestCars
+      parameters:
+        - name: limit
+          in: query
+          description: Limit of results
+          schema:
+            type: number
+        - name: country
+          in: query
+          description: Country code
+          schema:
+            type: string
+      responses:
+        '201':
+          description: success search cars
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchCarsResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/most-viewed:
+    get:
+      tags:
+        - Car
+      summary: Get most viewed cars
+      operationId: getMostViewedCars
+      parameters:
+        - name: limit
+          in: query
+          description: Limit of results
+          schema:
+            type: number
+        - name: country
+          in: query
+          description: Country code
+          schema:
+            type: string
+      responses:
+        '201':
+          description: success search cars
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchCarsResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/true-cars:
+    get:
+      tags:
+        - Car
+      summary: Get trueCars
+      operationId: getTrueCars
+      parameters:
+        - name: limit
+          in: query
+          description: Limit of results
+          schema:
+            type: number
+        - name: country
+          in: query
+          description: Country code
+          schema:
+            type: string
+      responses:
+        '201':
+          description: success search cars
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchCarsResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/similar:
+    post:
+      tags:
+        - Car
+      summary: Search similar cars
+      operationId: getSimilarCars
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Get similar cars
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimilarCarsPayload'
+      responses:
+        '201':
+          description: success search similar cars
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchCarsResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/car-view-count:
+    post:
+      tags:
+        - Car
+      summary: Add car or seller phone view count
+      operationId: addViewCount
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Add car or seller phone view count
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarViewCountPayload'
+      responses:
+        '201':
+          description: success add car view count
+          content:
+            application/json:
+              example:
+                result: ok
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/average-price:
+    post:
+      tags:
+        - Car
+      summary: Get car average price
+      operationId: getAveragePrice
+      requestBody:
+        description: Get average car price
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetAveragePricePayload'
+      responses:
+        '201':
+          description: success get car average price
+          content:
+            application/json:
+              example:
+                price: 21000
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /views/history/{carId}:
+    get:
+      tags:
+        - Views
+      summary: Get car views history
+      operationId: getCarViewsHistory
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: carId
+          in: path
+          description: Car id
+          required: true
+          schema:
+            type: number
+      responses:
+        '201':
+          description: success get car views history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarViewsHistoryResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+
+
+  /cars/statuses:
+    get:
+      tags:
+        - Status
+      summary: Get car statuses
+      operationId: getCarStatuses
+      responses:
+        '201':
+          description: success get car statuses
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarStatusesResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/change-visible-status:
+    post:
+      tags:
+        - Status
+      summary: Change car status
+      operationId: changeCarVisibleStatus
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Change Car Status Payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeCarStatusPayload'
+      responses:
+        '201':
+          description: success change car status
+          content:
+            application/json:
+              example:
+                result: ok
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/get-uploaded-images:
+    post:
+      tags:
+        - Images
+      summary: Get car images
+      operationId: getCarImages
+      requestBody:
+        description: get car images payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetCarImagesPayload'
+      responses:
+        '201':
+          description: success get car images
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCarImagesResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/upload-image:
+    post:
+      tags:
+        - Images
+      summary: Upload image
+      operationId: uploadImage
+      requestBody:
+        description: upload image
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadImagePayload'
+      responses:
+        '201':
+          description: success upload image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCarImagesResponse'
+
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /cars/delete-uploaded-images:
+    post:
+      tags:
+        - Images
+      summary: Delete images
+      operationId: deleteImages
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: delete images
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteImagesPayload'
+      responses:
+        '201':
+          description: success delete images
+          content:
+            application/json:
+              schema:
+                example:
+                  result: ok
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /complaints/complain:
+    post:
+      tags:
+        - Complaint
+      summary: Complain
+      operationId: complain
+      requestBody:
+        description: complain
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplainPayload'
+      responses:
+        '201':
+          description: success complain
+          content:
+            application/json:
+              schema:
+                example:
+                  result: ok
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /geo/location:
+    get:
+      tags:
+        - Geo
+      summary: Get current location
+      operationId: getLocation
+      responses:
+        '201':
+          description: success get location
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLocationResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /favorites:
+    get:
+      tags:
+        - Favorites
+      summary: Get favorites cars
+      operationId: getFavoritesCars
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: success get favorites cars
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFavoritesCarsResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+    put:
+      tags:
+        - Favorites
+      summary: Add cars to favorites
+      operationId: addCarsToFavorites
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: add cars to favorites
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddFavoritesCarsPayload'
+      responses:
+        '201':
+          description: success add cars to favorites
+          content:
+            application/json:
+              schema:
+                example:
+                  result: ok
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /favorites/delete:
+    post:
+      tags:
+        - Favorites
+      summary: Delete cars from favorites
+      operationId: deleteCarsFromFavorites
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Delete cars from favorites
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddFavoritesCarsPayload'
+      responses:
+        '201':
+          description: success delete cars from favorites
+          content:
+            application/json:
+              schema:
+                example:
+                  result: ok
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /deposit/initial/{currency}:
+    get:
+      tags:
+        - Deposit
+      summary: Get deposit initial data
+      operationId: getDepositInitialData
+      parameters:
+        - name: currency
+          in: path
+          description: Currency
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: success get deposit initial data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDepositInitialDataResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /deposit/methods:
+    get:
+      tags:
+        - Deposit
+      summary: Get deposit methods
+      operationId: getDepositMethods
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: country
+          in: query
+          description: Country code
+          schema:
+            type: string
+      responses:
+        '200':
+          description: success get deposit methods
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDepositMethodsResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /deposit/make:
+    post:
+      tags:
+        - Deposit
+      summary: make deposit
+      operationId: makeDeposit
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Delete cars from favorites
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MakeDepositPayload'
+      responses:
+        '201':
+          description: success make deposit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MakeDepositResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /deposit/get-transaction-status/{transaction}:
+    get:
+      tags:
+        - Deposit
+      summary: Get deposit transaction status
+      operationId: getDepositTransactionStatus
+      parameters:
+        - name: transaction
+          in: path
+          description: Transaction
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: success get deposit transaction status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDepositTransactionStatusResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /service/to-top-price:
+    get:
+      tags:
+        - Service
+      summary: get price place to top car
+      operationId: getPriceToTop
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: success get price to top
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/ToTopPriceResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /service/to-top:
+    post:
+      tags:
+        - Service
+      summary: place top
+      operationId: placeTop
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Place car top
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToTopPayload'
+      responses:
+        '201':
+          description: success place top
+          content:
+            aplication/json:
+              example:
+                result: ok
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /service/place-top-catalog-price:
+    get:
+      tags:
+        - Service
+      summary: get price place top catalog price
+      operationId: getPriceTopCatalog
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: success get price top catalog
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/TopCatalogPriceResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /service/place-top-catalog:
+    post:
+      tags:
+        - Service
+      summary: place top catalog
+      operationId: placeTopCatalog
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Place car to top catalog
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaceTopCatalogPayload'
+      responses:
+        '201':
+          description: success place top
+          content:
+            aplication/json:
+              example:
+                result: ok
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /service/check-top/{car_id}:
+    get:
+      tags:
+        - Service
+      summary: check car in top catalog
+      operationId: checkCarTopCatalog
+      parameters:
+        - name: car_id
+          in: path
+          description: Car id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: success place top
+          content:
+            aplication/json:
+              example:
+                true
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /service/top-catalog-cars:
+    post:
+      tags:
+        - Service
+      summary: get cars in top catalog
+      operationId: getTopCatalogCars
+      requestBody:
+        description: Place car to top catalog
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetTopCatalogCarsPayload'
+      responses:
+        '200':
+          description: success place top
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/GetCarsInTopCatalogResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /service/top-search-car-price:
+    get:
+      tags:
+        - Service
+      summary: get price for top search car
+      operationId: getTopSearchCarPrice
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: success get top search car price
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/TopCatalogPriceResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /service/place-top-search-car:
+    post:
+      tags:
+        - Service
+      summary: Place car in top of search
+      operationId: placeCarTopSearch
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Place car in top search
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TopSearchCarPayload'
+      responses:
+        '200':
+          description: success place top in search car
+          content:
+            aplication/json:
+              example:
+                result: ok
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /service/top-search-cars:
+    post:
+      tags:
+        - Service
+      summary: Get top search cars by search
+      operationId: getTopSearchCars
+      requestBody:
+        description: Get top search cars by search
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetTopSearchCars'
+      responses:
+        '200':
+          description: success get top search cars
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/GetTopSearchCarsResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+  /service/get-user-services:
+    get:
+      tags:
+        - Service
+      summary: Get user services
+      operationId: getUserServices
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: success get user services
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/GetUserServices'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    RegisterUserPayload:
+      title: register user schema
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            email:
+              type: string
+              description: user`s email
+            password:
+              type: string
+              description: user`s password
+            locale:
+              type: string
+              description: user`s locale
+            country_code:
+              type: string
+              description: user`s country code
+    RegisterUserResponse:
+      title: register user response schema
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+            email:
+              type: string
+              description: user`s email
+            first_name:
+              nullable: true
+              default: null
+              type: string
+              description: user`s first name
+            last_name:
+              nullable: true
+              default: null
+              type: string
+              description: user`s last name
+            user_name:
+              nullable: true
+              default: null
+              type: string
+              description: username
+            confirmed:
+              type: boolean
+              description: Is user confirmed
+            verifiedPhone:
+              type: boolean
+              description: Is user phone verified
+            verifiedEmail:
+              type: boolean
+              description: Is user email verified
+            isBanned:
+              type: boolean
+              description: Is user banned
+            created_at:
+              type: string
+              description: Date when user was created
+            country:
+              type: object
+              properties:
+                country_code:
+                  type: string
+                  description: Country code
+                lang_key:
+                  type: string
+                  description: lang key
+            locale:
+              type: string
+              description: Locale
+            balance:
+              type: number
+              description: User's balance
+            currency:
+              type: string
+              description: User's currency
+    LoginUserPayload:
+      title: login user schema
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+    LoginUserResponse:
+      title: login user response
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+            email:
+              type: string
+              description: user`s email
+            first_name:
+              nullable: true
+              default: null
+              type: string
+              description: user`s first name
+            last_name:
+              nullable: true
+              default: null
+              type: string
+              description: user`s last name
+            middle_name:
+              nullable: true
+              default: null
+              type: string
+              description: username
+            phone_code:
+              nullable: true
+              default: null
+              type: string
+              description: phone code
+            phone_number:
+              nullable: true
+              default: null
+              type: string
+              description: phone number
+            avatar:
+              nullable: true
+              default: null
+              type: string
+              description: avatar
+            allow_email_promos:
+              nullable: true
+              default: null
+              type: boolean
+              description: allow_email_promos
+            allow_push_promos:
+              nullable: true
+              default: null
+              type: boolean
+              description: allow_push_promos
+            allow_private_messages:
+              nullable: true
+              default: null
+              type: boolean
+              description: allow_private_messages
+            confirmed:
+              type: boolean
+              description: Is user confirmed
+            verifiedPhone:
+              type: boolean
+              description: Is user phone verified
+            verifiedEmail:
+              type: boolean
+              description: Is user email verified
+            isBanned:
+              type: boolean
+              description: Is user banned
+            created_at:
+              type: string
+              description: Date when user was created
+            country:
+              type: object
+              properties:
+                country_code:
+                  type: string
+                  description: Country code
+                lang_key:
+                  type: string
+                  description: lang key
+            region:
+              type: object
+              properties:
+                region_code:
+                  type: string
+                  description: Region code
+                lang_key:
+                  type: string
+                  description: lang key
+            locale:
+              type: string
+              description: Locale
+            balance:
+              type: number
+              description: User's balance
+            currency:
+              type: string
+              description: User's currency
+            city:
+              nullable: true
+              default: null
+              type: string
+              description: city
+    DeleteUserPayload:
+      title: delete user payload
+      type: object
+      properties:
+        email:
+          type: string
+          description: user`s email
+        password:
+          type: string
+          description: user`s paswor
+    UpdateUserPayload:
+      title: update user data
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            first_name:
+              type: string
+            last_name:
+              type: string
+            middle_name:
+              type: string
+            country_code:
+              type: string
+            region_code:
+              type: string
+            city:
+              type: string
+            locale:
+              type: string
+            phone_code:
+              type: string
+            phone_number:
+              type: string
+            allow_email_promos:
+              type: boolean
+            allow_push_promos:
+              type: boolean
+            allow_private_messages:
+              type: boolean
+    SetAvatarPayload:
+      title: set avatar
+      type: object
+      properties:
+        avatar:
+          type: string
+          format: binary
+    ChangePasswordPayload:
+      title: change password
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            current_password:
+              type: string
+            new_password:
+              type: string
+    ConfirmEmailPayload:
+      title: confirm email
+      type: object
+      properties:
+        confirm_email_code:
+          type: string
+    ResetPasswordPayload:
+      title: reset password
+      type: object
+      properties:
+        email:
+          type: string
+    SetNewPasswordTokenPayload:
+      title: set new password by token
+      type: object
+      properties:
+        codeConfirmation:
+          type: string
+        newPassword:
+          type: string
+        repeatPassword:
+          type: string
+    UpdateMailingSettingsPayload:
+      title: update mailing settings payload
+      type: object
+      properties:
+        info_seller:
+          type: boolean
+        payments_seller:
+          type: boolean
+        tips_seller:
+          type: boolean
+        services_seller:
+          type: boolean
+        info_user:
+          type: boolean
+        last_cars_user:
+          type: boolean
+    MailingSettingsResponse:
+      title: get mailing settings data
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        info_seller:
+          type: boolean
+        payments_seller:
+          type: boolean
+        tips_seller:
+          type: boolean
+        services_seller:
+          type: boolean
+        info_user:
+          type: boolean
+        last_cars_user:
+          type: boolean
+        created_at:
+          type: string
+    CarInitialOptionsResponse:
+      title: car initial options response
+      type: object
+      properties:
+        bodyTypes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              lang_key:
+                type: string
+        states:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              lang_key:
+                type: string
+        saleTypes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              lang_key:
+                type: string
+        carTypes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              lang_key:
+                type: string
+        brands:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              name:
+                type: string
+              is_popular:
+                type: boolean
+        regions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              region_code:
+                type: string
+              lang_key:
+                type: string
+              country:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                  country_code:
+                    type: string
+                  lang_key:
+                    type: string
+        engineTypes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              lang_key:
+                type: string
+        drives:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              lang_key:
+                type: string
+        transmissions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              lang_key:
+                type: string
+        doors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              lang_key:
+                type: string
+        colors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              lang_key:
+                type: string
+        painted:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              lang_key:
+                type: string
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              lang_key:
+                type: string
+              category:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                  value:
+                    type: string
+                  lang_key:
+                    type: string
+        countries:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              lang_key:
+                type: string
+        currencies:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              symbol:
+                type: string
+    GetCarModelsByBrandResponse:
+      title: get car models by brand
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int32
+          value:
+            type: string
+          name:
+            type: string
+          brand:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              value:
+                type: string
+              name:
+                type: string
+    CreateCarPayload:
+      title: create car payload
+      type: object
+      required:
+        - car
+      properties:
+        car:
+          type: object
+          properties:
+            sale_type:
+              type: string
+            body_type:
+              type: string
+            car_type:
+              type: string
+            images:
+              type: array
+              items:
+                type: string
+            defaultImage:
+              type: string
+            brand:
+              type: string
+            model:
+              type: string
+            country:
+              type: string
+            description:
+              type: string
+            year:
+              type: string
+            vin:
+              type: string
+            region:
+              type: string
+            engine_volume:
+              type: number
+            engine_type:
+              type: string
+            drive:
+              type: string
+            transmission:
+              type: string
+            door:
+              type: string
+            color:
+              type: string
+            painted:
+              type: string
+            options:
+              type: array
+              items:
+                type: integer
+                format: int32
+            accidents:
+              type: boolean
+            price:
+              type: integer
+              format: int32
+            mileage:
+              type: integer
+              format: int32
+            currency:
+              type: string
+            state:
+              type: string
+            custom_clearance:
+              type: boolean
+            video_review:
+              type: string
+            fuel_consumption_city:
+              type: number
+            fuel_consumption_average:
+              type: number
+            fuel_consumption_road:
+              type: number
+            power_kwt:
+              type: number
+            come_from:
+              type: string
+        user:
+          type: object
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+            locale:
+              type: string
+            country_code:
+              type: string
+
+    CreateCarResponse:
+      title: create car response
+      type: object
+      properties:
+        car:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+            url:
+              type: string
+            description:
+              type: string
+            year:
+              type: string
+            accidents:
+              type: boolean
+            price:
+              type: integer
+              format: int32
+            mileage:
+              type: integer
+              format: int32
+            state:
+              type: string
+            custom_clearance:
+              type: boolean
+            engine_volume:
+              type: number
+            video_review:
+              type: string
+            vin:
+              type:  string
+              nullable: true
+              default: null
+            created_at:
+              type: string
+            country:
+              type: object
+              properties:
+                country_code:
+                  type: string
+                lang_key:
+                  type: string
+            images:
+              type: array
+              items:
+                type: object
+                properties:
+                  size:
+                    type: string
+                  image_key:
+                    type: string
+                  image_location:
+                    type: string
+                  default:
+                    type: boolean
+            sale_type:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            body_type:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            car_type:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            brand:
+              type: object
+              properties:
+                value:
+                  type: string
+                name:
+                  type: string
+            model:
+              type: object
+              properties:
+                value:
+                  type: string
+                name:
+                  type: string
+            region:
+              type: object
+              properties:
+                region_code:
+                  type: string
+                lang_key:
+                  type: string
+            engine_type:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            drive:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            transmission:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            door:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            color:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            currency:
+              type: object
+              properties:
+                value:
+                  type: string
+                symbol:
+                  type: string
+            painted:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            come_from:
+              type: object
+              properties:
+                country_code:
+                  type: string
+                lang_key:
+                  type: string
+            options:
+              type: array
+              items:
+                type: object
+                properties:
+                  value:
+                    type: string
+                  lang_key:
+                    type: string
+            user:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int32
+                first_name:
+                  type: string
+                  nullable: true
+                last_name:
+                  type: string
+                  nullable: true
+                user_name:
+                  type: string
+                  nullable: true
+            car_status:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+        user:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+            email:
+              type: string
+            first_name:
+              type: string
+            last_name:
+              type: string
+            user_name:
+              type: string
+            confirmed:
+              type: boolean
+            verifiedPhone:
+              type: boolean
+            verifiedEmail:
+              type: string
+            isBanned:
+              type: string
+            created_at:
+              type: string
+            country:
+              type: object
+              properties:
+                country_code:
+                  type: string
+                lang_key:
+                  type: string
+            locale:
+              type: string
+    EditCarPayload:
+      title: edit car payload
+      type: object
+      properties:
+        car:
+          type: object
+          properties:
+            carId:
+              type: integer
+              format: int3
+            sale_type:
+              type: string
+            body_type:
+              type: string
+            car_type:
+              type: string
+            images:
+              type: array
+              items:
+                type: string
+            defaultImage:
+              type: string
+            brand:
+              type: string
+            model:
+              type: string
+            country:
+              type: string
+            description:
+              type: string
+            year:
+              type: string
+            vin:
+              type: string
+            region:
+              type: string
+            engine_volume:
+              type: number
+            engine_type:
+              type: string
+            drive:
+              type: string
+            transmission:
+              type: string
+            door:
+              type: string
+            color:
+              type: string
+            painted:
+              type: string
+            options:
+              type: array
+              items:
+                type: integer
+                format: int32
+            accidents:
+              type: boolean
+            price:
+              type: integer
+              format: int32
+            mileage:
+              type: integer
+              format: int32
+            currency:
+              type: string
+            state:
+              type: string
+            custom_clearance:
+              type: boolean
+            video_review:
+              type: string
+            fuel_consumption_city:
+              type: number
+            fuel_consumption_average:
+              type: number
+            fuel_consumption_road:
+              type: number
+            power_kwt:
+              type: number
+            come_from:
+              type: string
+    CarInfoEditResponse:
+      type: object
+      properties:
+        car:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+            url:
+              type: string
+            description:
+              type: string
+            defaultImage:
+              type: string
+            year:
+              type: string
+            accidents:
+              type: boolean
+            price:
+              type: integer
+              format: int32
+            mileage:
+              type: integer
+              format: int32
+            state:
+              type: string
+            custom_clearance:
+              type: boolean
+            engine_volume:
+              type: number
+            video_review:
+              type: string
+            vin:
+              type:  string
+              nullable: true
+              default: null
+            created_at:
+              type: string
+            country:
+              type: object
+              properties:
+                country_code:
+                  type: string
+                lang_key:
+                  type: string
+            images:
+              type: array
+              items:
+                type: object
+                properties:
+                  size:
+                    type: string
+                  image_key:
+                    type: string
+                  image_location:
+                    type: string
+                  default:
+                    type: boolean
+            sale_type:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            body_type:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            car_type:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            brand:
+              type: object
+              properties:
+                value:
+                  type: string
+                name:
+                  type: string
+            model:
+              type: object
+              properties:
+                value:
+                  type: string
+                name:
+                  type: string
+            region:
+              type: object
+              properties:
+                region_code:
+                  type: string
+                lang_key:
+                  type: string
+            engine_type:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            drive:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            transmission:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            door:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            color:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            currency:
+              type: object
+              properties:
+                value:
+                  type: string
+                symbol:
+                  type: string
+            painted:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            come_from:
+              type: object
+              properties:
+                country_code:
+                  type: string
+                lang_key:
+                  type: string
+            power_kwt:
+              type: number
+              format: float
+            fuel_consumption_city:
+              type: number
+              format: float
+            fuel_consumption_average:
+              type: number
+              format: float
+            fuel_consumption_road:
+              type: number
+              format: float
+            options:
+              type: array
+              items:
+                type: object
+                properties:
+                  value:
+                    type: string
+                  lang_key:
+                    type: string
+            user:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int32
+                first_name:
+                  type: string
+                  nullable: true
+                last_name:
+                  type: string
+                  nullable: true
+                user_name:
+                  type: string
+                  nullable: true
+            car_status:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+    CarInfoResponse:
+      type: object
+      properties:
+        car:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+            url:
+              type: string
+            canEdit:
+              type: boolean
+            view_car_count:
+              type: integer
+              format: int32
+            view_phone_count:
+              type: integer
+              format: int32
+            description:
+              type: string
+            year:
+              type: string
+            accidents:
+              type: boolean
+            price:
+              type: integer
+              format: int32
+            mileage:
+              type: integer
+              format: int32
+            state:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            custom_clearance:
+              type: boolean
+            engine_volume:
+              type: number
+            video_review:
+              type: string
+            vin:
+              type:  string
+              nullable: true
+              default: null
+            created_at:
+              type: string
+            country:
+              type: object
+              properties:
+                country_code:
+                  type: string
+                lang_key:
+                  type: string
+            images:
+              type: array
+              items:
+                type: object
+                properties:
+                  size:
+                    type: string
+                  image_key:
+                    type: string
+                  image_location:
+                    type: string
+                  default:
+                    type: boolean
+            groups:
+              type: array
+              items:
+                type: object
+                properties:
+                  value:
+                    type: string
+                  lang_key:
+                    type: string
+            sale_type:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            body_type:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            car_type:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            brand:
+              type: object
+              properties:
+                value:
+                  type: string
+                name:
+                  type: string
+            model:
+              type: object
+              properties:
+                value:
+                  type: string
+                name:
+                  type: string
+            region:
+              type: object
+              properties:
+                region_code:
+                  type: string
+                lang_key:
+                  type: string
+            engine_type:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            drive:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            transmission:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            door:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            color:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            currency:
+              type: object
+              properties:
+                value:
+                  type: string
+                symbol:
+                  type: string
+            painted:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+            come_from:
+              type: object
+              properties:
+                country_code:
+                  type: string
+                lang_key:
+                  type: string
+            power_kwt:
+              type: number
+              format: float
+            fuel_consumption_city:
+              type: number
+              format: float
+            fuel_consumption_average:
+              type: number
+              format: float
+            fuel_consumption_road:
+              type: number
+              format: float
+            options:
+              type: array
+              items:
+                type: object
+                properties:
+                  value:
+                    type: string
+                  lang_key:
+                    type: string
+            user:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int32
+                first_name:
+                  type: string
+                  nullable: true
+                last_name:
+                  type: string
+                  nullable: true
+                user_name:
+                  type: string
+                  nullable: true
+                city:
+                  type: string
+                verifiedPhone:
+                  type: boolean
+                verifiedEmail:
+                  type: boolean
+                phone:
+                  type: string
+                avatar:
+                  type: string
+                allow_private_messages:
+                  type: boolean
+            car_status:
+              type: object
+              properties:
+                value:
+                  type: string
+                lang_key:
+                  type: string
+    SellerCarsReponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: number
+          url:
+            type: string
+          brand:
+            type: object
+            properties:
+              value:
+                type: string
+              name:
+                type: string
+          model:
+            type: object
+            properties:
+              value:
+                type: string
+              name:
+                type: string
+          year:
+            type: string
+          price:
+            type: string
+          currency:
+            type: object
+            properties:
+              value:
+                type: string
+              symbol:
+                type: string
+          images:
+            type: array
+            items:
+              type: object
+              properties:
+                size:
+                  type: string
+                image_key:
+                  type: string
+                image_location:
+                  type: string
+                default:
+                  type: boolean
+          mileage:
+            type: number
+            format: float
+    DeleteCarPayload:
+      type: object
+      properties:
+        carId:
+          type: integer
+          format: int32
+    MyCar:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        url:
+          type: string
+        description:
+          type: string
+        brand:
+          type: object
+          properties:
+            value:
+              type: string
+            name:
+              type: string
+        model:
+          type: object
+          properties:
+            value:
+              type: string
+            name:
+              type: string
+        year:
+          type: string
+        accidents:
+          type: boolean
+        price:
+          type: integer
+          format: int32
+        currency:
+          type: object
+          properties:
+            value:
+              type: string
+            symbol:
+              type: string
+        state:
+          type: string
+        custom_clearance:
+          type: boolean
+        engine_volume:
+          type: number
+        video_review:
+          type: string
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              size:
+                type: string
+              image_key:
+                type: string
+              image_location:
+                type: string
+              default:
+                type: boolean
+        vin:
+          type: string
+        view_car_count:
+          type: integer
+          format: int32
+        view_phone_count:
+          type: integer
+          format: int32
+        mileage:
+          type: number
+        car_status:
+          type: object
+          properties:
+            value:
+              type: string
+            lang_key:
+              type: string
+        transmission:
+          type: object
+          properties:
+            value:
+              type: string
+            lang_key:
+              type: string
+        engine_type:
+          type: object
+          properties:
+            value:
+              type: string
+            lang_key:
+              type: string
+        region:
+          type: object
+          properties:
+            region_code:
+              type: string
+            lang_key:
+              type: string
+        visible_status:
+          type: object
+          properties:
+            value:
+              type: string
+            lang_key:
+              type: string
+        groups:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              lang_key:
+                type: string
+        rejected_message:
+          type: string
+        approved:
+          type: boolean
+        created_at:
+          type: string
+    MyCarsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/MyCar'
+
+    SimilarCarsPayload:
+      type: object
+      properties:
+        country_code:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        price_from:
+          type: number
+        price_to:
+          type: number
+        user_id:
+          type: number
+
+    SearchCarsPayload:
+      type: object
+      properties:
+        filters:
+          type: object
+          properties:
+            year_from:
+              type: string
+            year_to:
+              type: string
+            accidents:
+              type: boolean
+            price_from:
+              type: integer
+              format: int32
+            price_to:
+              type: integer
+              format: int32
+            state:
+              type: string
+            custom_clearance:
+              type: boolean
+            engine_volume_from:
+              type: number
+            engine_volume_to:
+              type: number
+            sale_type:
+              type: string
+            body_type:
+              type: string
+            car_type:
+              type: string
+            brand:
+              type: string
+            model:
+              type: array
+              items:
+                type: string
+            region:
+              type: array
+              items:
+                type: string
+            country:
+              type: string
+            come_from:
+              type: string
+            engine_type:
+              type: array
+              items:
+                type: string
+            drive:
+              type: array
+              items:
+                type: string
+            transmission:
+              type: array
+              items:
+                type: string
+            door:
+              type: array
+              items:
+                type: string
+            color:
+              type: array
+              items:
+                type: string
+            painted:
+              type: string
+            mileage_from:
+              type: number
+            mileage_to:
+              type: number
+            options:
+              type: array
+              items:
+                type: string
+            groups:
+              type: array
+              items:
+                type: string
+        sort:
+          type: string
+          enum:
+            - BY_ADDING_LAST
+            - BY_PRICE_LOW
+            - BY_PRICE_HIGH
+            - BY_YEAR_LOW
+            - BY_YEAR_HIGH
+            - BY_MILEAGE_LOW
+            - BY_MILEAGE_HIGH
+            - BY_VIN_CODE
+        paginate:
+          type: object
+          properties:
+            start:
+              type: integer
+              format: int32
+            count:
+              type: integer
+              format: int32
+    SearchCarItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        url:
+          type: string
+        description:
+          type: string
+        year:
+          type: string
+        accidents:
+          type: boolean
+        price:
+          type: integer
+          format: int32
+        price_range:
+          type: integer
+          format: int32
+        mileage:
+          type: integer
+          format: int32
+        state:
+          type: string
+        custom_clearance:
+          type: boolean
+        engine_volume:
+          type: number
+        video_review:
+          type: string
+        vin:
+          type: string
+        created_at:
+          type: string
+        country:
+          type: object
+          properties:
+            country_code:
+              type: string
+            lang_key:
+              type: string
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              size:
+                type: string
+              image_key:
+                type: string
+              image_location:
+                type: string
+              default:
+                type: boolean
+        brand:
+          type: object
+          properties:
+            value:
+              type: string
+            name:
+              type: string
+        model:
+          type: object
+          properties:
+            value:
+              type: string
+            name:
+              type: string
+        region:
+          type: object
+          properties:
+            region_code:
+              type: string
+            lang_key:
+              type: string
+        currency:
+          type: object
+          properties:
+            value:
+              type: string
+            symbol:
+              type: string
+        engine_type:
+          type: object
+          properties:
+            value:
+              type: string
+            lang_key:
+              type: string
+        groups:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              lang_key:
+                type: string
+    SearchCarsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/SearchCarItem'
+    GetAveragePricePayload:
+      type: object
+      properties:
+        brand:
+          type: string
+        model:
+          type: string
+        year:
+          type: string
+        body_type:
+          type: string
+        mileage:
+          type: number
+        engine_type:
+          type: string
+        transmission:
+          type: string
+        drive:
+          type: string
+        country:
+          type: string
+    SearchCarsFullResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchCarItem'
+        count:
+          type: integer
+          format: int32
+    CarViewCountPayload:
+      type: object
+      properties:
+        carId:
+          type: integer
+          format: int32
+        viewType:
+          type: string
+          enum:
+            - VIEW_CAR
+            - VIEW_PHONE
+        visitorId:
+          type: string
+    CarViewsHistoryResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/CarViewsHistory'
+    CarViewsHistory:
+      type: object
+      properties:
+        carId:
+          type: integer
+          format: int32
+        type_view:
+          type: string
+          enum:
+            - VIEW_CAR
+            - VIEW_PHONE
+        count:
+          type: integer
+          format: int32
+        created_at:
+          type: string
+    CarStatusesResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int32
+          value:
+            type: string
+          lang_key:
+            type: string
+    ChangeCarStatusPayload:
+      type: object
+      properties:
+        carId:
+          type: integer
+          format: int32
+        status:
+          type: string
+          enum:
+            - public
+            - archive
+    GetCarImagesPayload:
+      type: object
+      properties:
+        guestId:
+          type: string
+        carId:
+          type: integer
+          format: int32
+    GetCarImagesResponse:
+      type: object
+      properties:
+        image:
+          type: array
+          items:
+            type: object
+            properties:
+              size:
+                type: string
+              image_key:
+                type: string
+              image_location:
+                type: string
+              default:
+                type: boolean
+        guestKey:
+          type: string
+    UploadImagePayload:
+      title: Upload image
+      type: object
+      properties:
+        file:
+          type: array
+          items:
+            type: string
+            format: binary
+        guestId:
+          type: string
+    DeleteImagesPayload:
+      title: Delete images payload
+      type: object
+      properties:
+        imageKeys:
+          type: array
+          items:
+            type: string
+        guestId:
+          type: string
+        carId:
+          type: number
+    ComplainPayload:
+      title: Complain payload
+      type: object
+      properties:
+        complaint:
+          type: string
+        carId:
+          type: integer
+          format: int32
+        email:
+          type: string
+        first_name:
+          type: string
+    GetLocationResponse:
+      title: Complain payload
+      type: object
+      properties:
+        country_code:
+          type: string
+        city_name:
+          type: string
+        timezone:
+          type: string
+        ip:
+          type: string
+    SubscribeEmailPayload:
+      title: Subscribe User payload
+      type: object
+      properties:
+        email:
+          type: string
+        countryCode:
+          type: string
+    FavoriteCar:
+      title: favorite cars data
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        url:
+          type: string
+        description:
+          type: string
+        brand:
+          type: object
+          properties:
+            value:
+              type: string
+            name:
+              type: string
+        model:
+          type: object
+          properties:
+            value:
+              type: string
+            name:
+              type: string
+        year:
+          type: string
+        price:
+          type: integer
+          format: int32
+        currency:
+          type: object
+          properties:
+            value:
+              type: string
+            symbol:
+              type: string
+        engine_type:
+          type: object
+          properties:
+            value:
+              type: string
+            lang_key:
+              type: string
+        transmission:
+          type: object
+          properties:
+            value:
+              type: string
+            lang_key:
+              type: string
+        region:
+          type: object
+          properties:
+            region_code:
+              type: string
+              description: Region code
+            lang_key:
+              type: string
+              description: lang key
+        mileage:
+          type: integer
+          format: int32
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              size:
+                type: string
+              image_key:
+                type: string
+              image_location:
+                type: string
+              default:
+                type: boolean
+        groups:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              lang_key:
+                type: string
+        user:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+            first_name:
+              type: string
+            last_name:
+              type: string
+            middle_name:
+              type: string
+            phone:
+              type: string
+            city:
+              type: string
+            avatar:
+              type: string
+    GetFavoritesCarsResponse:
+      title: Get favorites cars response
+      type: array
+      items:
+        $ref: '#/components/schemas/FavoriteCar'
+
+    AddFavoritesCarsPayload:
+      title: Add favorites cars payload
+      type: object
+      properties:
+        carIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+    DepositMethod:
+      type: object
+      properties:
+        method_name:
+          type: string
+        payment_system:
+          type: string
+    GetDepositMethodsResponse:
+      title: Get deposit methods
+      type: array
+      items:
+        $ref: '#/components/schemas/DepositMethod'
+    MakeDepositPayload:
+      title: make deposit payload
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+        paytypes:
+          type: string
+        payment_system:
+          type: string
+        result_url:
+          type: string
+        language:
+          type: string
+        service_properties:
+          type: object
+          properties:
+            car_id:
+              type: number
+            service:
+              type: string
+              enum:
+                - to_top
+                - top_search
+                - paid_catalog
+            period:
+              type: string
+              enum:
+                - week
+                - week4
+                - week6
+                - week12
+    MakeDepositResponse:
+      title: make deposit response
+      properties:
+        type:
+          type: string
+          enum:
+            - FORM_DATA
+        properties:
+          type: object
+          properties:
+            action:
+              type: string
+            data:
+              type: string
+            signature:
+              type: string
+    ToTopPayload:
+      type: object
+      properties:
+        car_id:
+          type: number
+    PlaceTopCatalogPayload:
+      type: object
+      properties:
+        car_id:
+          type: number
+        period:
+          type: string
+          enum:
+            - week
+            - week4
+            - week6
+            - week12
+    GetTopCatalogCarsPayload:
+      type: object
+      properties:
+        filters:
+          type: object
+          properties:
+            brand:
+              type: string
+            model:
+              type: string
+        paginate:
+          type: object
+          properties:
+            start:
+              type: number
+            count:
+              type: number
+        country:
+          type: string
+    GetCarsInTopCatalogResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchCarItem'
+        count:
+          type: number
+    GetTopSearchCarsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/SearchCarItem'
+    TopSearchCarFilters:
+      type: object
+      properties:
+        accidents:
+          type: boolean
+        sale_type:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        body_type:
+          type: string
+        region:
+          type: string
+        engine_type:
+          type: string
+        drive:
+          type: string
+        transmission:
+          type: string
+
+    GetTopSearchCars:
+      type: object
+      properties:
+        filters:
+          $ref: '#/components/schemas/TopSearchCarFilters'
+        pagesCount:
+          type: number
+        currentPage:
+          type: number
+        country:
+          type: string
+    TopSearchCarPayload:
+      type: object
+      properties:
+        car_id:
+          type: number
+        period:
+          type: string
+          enum:
+            - week
+            - week4
+            - week6
+            - week12
+    GetDepositInitialDataResponse:
+      type: object
+      properties:
+        currency:
+          type: string
+        symbol:
+          type: string
+        min:
+          type: number
+        max:
+          type: number
+        recommended:
+          type: number
+    GetDepositTransactionStatusResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - PENDING
+            - SUCCESS
+            - FAILURE
+        service_properties:
+          type: object
+          properties:
+            car_id:
+              type: number
+            service:
+              type: string
+              enum:
+                - to_top
+                - top_search
+                - paid_catalog
+            period:
+              type: string
+              enum:
+                - week
+                - week4
+                - week6
+                - week12
+    ToTopPriceResponse:
+      type: object
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+    TopCatalogPrice:
+      type: object
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+        period:
+          type: string
+          enum:
+            - week
+            - week4
+            - week6
+            - week12
+    TopCatalogPriceResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/TopCatalogPrice'
+    UserService:
+      type: object
+      properties:
+        carId:
+          type: number
+        type:
+          type: string
+          enum:
+            - to_top
+            - top_search
+            - paid_catalog
+        period:
+          type: string
+          enum:
+            - week
+            - week4
+            - week6
+            - week12
+        expiredAt:
+          type: string
+    GetUserServices:
+      type: array
+      items:
+        $ref: '#/components/schemas/UserService'

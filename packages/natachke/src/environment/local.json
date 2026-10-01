@@ -1,0 +1,17 @@
+{
+  "apiServer": "",
+  "messageApiServer": "",
+  "websocketApiServer": "",
+  "currentCountryCode": "UA",
+  "defaultPhoneCode": "+38",
+  "phone_crypto_code": "",
+  "recaptchaPublicKey": "",
+  "paymentsEnabled": false,
+  "topCatalogServiceEnabled": false,
+  "topSearchServiceEnabled": false,
+  "toTopServiceEnabled": false,
+  "domain": "",
+  "supportEmail": "",
+  "defaultLang": "ua"
+
+}

@@ -1,0 +1,5 @@
+export { default as copy } from './copy.svg'
+export { default as facebook } from './facebook.svg'
+export { default as telegram } from './telegram.svg'
+export { default as twitter } from './twitter.svg'
+export { default as viber } from './viber.svg'

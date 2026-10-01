@@ -1,0 +1,5 @@
+export { default as TileSlider } from './TileSlider'
+export { default as TrueCarSlider } from './TrueCarSlider'
+export { default as LastAddedSlider } from './LastAddedSlider'
+export { default as SimpleSlider } from './SimpleSlider'
+export * from './CarDetailsSlider'

@@ -1,0 +1,6 @@
+export { default as cars } from './cars.svg'
+export { default as calendar } from './calendar.svg'
+export { default as favorites } from './favorites.svg'
+export { default as messages } from './messages.svg'
+export { default as settings } from './settings.svg'
+export { default as logout } from './logout.svg'

@@ -1,0 +1,174 @@
+{
+  "name": "@handber/natachke",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@fingerprintjs/fingerprintjs": "4.2.1",
+    "@reduxjs/toolkit": "1.3.2",
+    "@welldone-software/why-did-you-render": "6.0.0-rc.1",
+    "chart.js": "^3.9.1",
+    "copy-to-clipboard": "3.3.1",
+    "cross-env": "7.0.2",
+    "customize-cra": "1.0.0",
+    "date-fns": "2.16.1",
+    "env-cmd": "10.1.0",
+    "eslint-config-prettier": "6.10.1",
+    "eslint-plugin-prettier": "3.1.2",
+    "final-form": "4.20.1",
+    "husky": "4.2.3",
+    "i18next": "19.3.4",
+    "i18next-browser-languagedetector": "4.0.2",
+    "i18next-xhr-backend": "3.2.2",
+    "jsonwebtoken": "^8.5.1",
+    "libphonenumber-js": "1.10.9",
+    "lint-staged": "10.0.8",
+    "lockr": "0.8.5",
+    "prettier": "2.0.1",
+    "ramda": "0.27.1",
+    "react": "16.14.0",
+    "react-app-polyfill": "1.0.6",
+    "react-app-rewired": "2.1.6",
+    "react-content-loader": "^7.0.0",
+    "react-dom": "16.14.0",
+    "react-dropzone": "^14.2.2",
+    "react-final-form": "6.5.1",
+    "react-google-recaptcha-v3": "1.10.1",
+    "react-helmet-async": "1.0.4",
+    "react-html-parser": "^2.0.2",
+    "react-i18next": "11.7.2",
+    "react-infinite-scroll-component": "6.1.0",
+    "react-paginate": "^8.1.3",
+    "react-redux": "7.2.0",
+    "react-router-dom": "5.1.2",
+    "react-scripts": "3.4.3",
+    "react-select": "5.8.0",
+    "react-share": "4.4.0",
+    "react-slick": "^0.29.0",
+    "react-test-renderer": "16.13.0",
+    "react-tooltip": "4.2.21",
+    "redux-injectors": "1.3.0",
+    "redux-persist": "^6.0.0",
+    "redux-saga": "1.1.3",
+    "reselect": "4.0.0",
+    "sanitize.css": "11.0.0",
+    "serve": "11.3.2",
+    "slick-carousel": "^1.8.1",
+    "socket.io-client": "4.6.1",
+    "styled-components": "5.1.1",
+    "stylelint": "13.2.1",
+    "stylelint-config-recommended": "3.0.0",
+    "ts-node": "8.8.2",
+    "typescript": "3.8.2",
+    "yup": "0.29.2",
+    "web-vitals": "^2.1.4",
+    "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "_ADOPT_NODE_V20": "cross-env NODE_OPTIONS=--openssl-legacy-provider",
+    "start": "yarn _ADOPT_NODE_V20 react-scripts start",
+    "start:prod": "yarn _ADOPT_NODE_V20 REACT_APP_CUSTOM_NODE_ENV=production react-scripts start",
+    "build": "yarn _ADOPT_NODE_V20 ./node_modules/.bin/env-cmd -f .env.production react-scripts build",
+    "build:staging": "yarn _ADOPT_NODE_V20 ./node_modules/.bin/env-cmd -f .env.staging react-scripts build",
+    "test": "yarn _ADOPT_NODE_V20 react-scripts test",
+    "test:coverage": "yarn _ADOPT_NODE_V20 yarn test -- --coverage",
+    "test:ci": "yarn _ADOPT_NODE_V20 CI=true yarn test",
+    "eject": "react-scripts eject",
+    "build:serve": "yarn _ADOPT_NODE_V20 yarn build && serve -l 3000 -s build",
+    "start:staging": "yarn _ADOPT_NODE_V20 yarn build:staging && serve -s build",
+    "checkTs": "tsc --noEmit",
+    "eslint": "eslint --ext js,ts,tsx",
+    "lint": "yarn eslint -- src",
+    "lint:fix": "yarn eslint -- --fix src",
+    "lint:css": "stylelint src/**/*.css",
+    "prettify": "prettier --write",
+    "bundleAnalyzer": "node ./src/scripts/bundleAnalyzer.js"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "engines": {
+    "npm": ">=6.4.1",
+    "node": ">=10.13.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "npm run eslint -- --fix"
+    ],
+    "*.{md,json}": [
+      "prettier --write"
+    ]
+  },
+  "husky(remove-everything-in-these-parentheses.See-the-issue-#29)": {
+    "hooks": {
+      "pre-commit": "npm run checkTs && lint-staged"
+    }
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*/*.d.ts",
+      "!src/**/*/Loadable.{js,jsx,ts,tsx}",
+      "!src/**/*/types.ts",
+      "!src/index.tsx"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    }
+  },
+  "devDependencies": {
+    "@babel/helper-builder-react-jsx": "7.10.4",
+    "@babel/helper-builder-react-jsx-experimental": "7.12.11",
+    "@babel/helper-regex": "7.10.5",
+    "@plaiceholder/base64": "1.0.0",
+    "@testing-library/jest-dom": "5.1.1",
+    "@testing-library/react": "10.0.1",
+    "@testing-library/react-hooks": "^5.0.3",
+    "@testing-library/user-event": "^12.7.3",
+    "@types/chart.js": "2.9.37",
+    "@types/jest": "25.1.4",
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.1",
+    "@types/react-helmet": "5.0.15",
+    "@types/react-redux": "7.1.7",
+    "@types/react-router-dom": "5.1.3",
+    "@types/react-select": "5.0.1",
+    "@types/react-slick": "^0.23.10",
+    "@types/react-test-renderer": "16.9.2",
+    "@types/styled-components": "5.1.7",
+    "@types/testing-library__jest-dom": "5.0.2",
+    "@types/testing-library__react": "9.1.3",
+    "@types/webpack-env": "1.15.1",
+    "@types/yup": "0.29.3",
+    "babel-jest": "24.9.0",
+    "babel-plugin-styled-components": "1.12.0",
+    "jest-styled-components": "7.0.3",
+    "mockdate": "^3.0.2",
+    "memoize-one": "^6.0.0",
+    "redux-saga-test-plan": "^4.0.1",
+    "speed-measure-webpack-plugin": "^1.5.0",
+    "stylelint-config-styled-components": "0.1.1",
+    "stylelint-processor-styled-components": "1.10.0",
+    "svgo": "1.3.2",
+    "svgo-loader": "2.2.1",
+    "ts-jest": "24.3.0",
+    "webpack-bundle-analyzer": "4.1.0",
+    "webpack-cli": "4.2.0"
+  }
+}

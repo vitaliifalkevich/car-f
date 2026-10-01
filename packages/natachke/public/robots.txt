@@ -1,0 +1,11 @@
+User-agent: Mediapartners-Google
+Disallow:
+
+User-agent: CriteoBot/0.1
+Disallow: /
+
+User-agent: SolomonoBot
+Disallow: *
+
+User-agent: *
+Disallow: */api/*

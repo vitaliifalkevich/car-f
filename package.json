@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "build:countries-and-regions": "yarn workspace @handber/countries-and-regions build",
+    "build:messages-api-client": "yarn workspace @handber/messages-api-client build",
+    "build:natachke-api-client": "yarn workspace @handber/natachke-api-client build",
+    "build:natachke": "yarn workspace @handber/natachke build",
+    "natachke:dev": "yarn workspace @handber/natachke start",
+    "natachke:add": "yarn workspace @handber/natachke add",
+    "natachke:remove": "yarn workspace @handber/natachke remove"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

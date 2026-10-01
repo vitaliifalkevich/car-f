@@ -1,0 +1,26 @@
+const lightTheme = {
+  colors: {
+    carTitle: '#003760',
+    description: 'rgba(0, 0, 0, 0.65)',
+    priceColor: '#000000',
+    textColor: 'rgba(0,0,0,0.65)',
+  },
+}
+
+const darkTheme: Theme = {
+  colors: {
+    carTitle: '#003760',
+    description: 'rgba(0, 0, 0, 0.65)',
+    priceColor: '#000000',
+    textColor: 'rgba(0,0,0,0.65)',
+  },
+}
+
+export type Theme = typeof lightTheme
+
+export const themes = {
+  light: lightTheme,
+  dark: darkTheme,
+}
+
+export default themes

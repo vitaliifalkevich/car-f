@@ -2,7 +2,7 @@
 
 Frontend of **[natachke.com](https://natachke.com)**, an automotive classifieds marketplace I designed and built on my own: listing search, car pages, seller dashboards and real-time buyer–seller chat.
 
-▶ **[Watch the video walkthrough](https://drive.google.com/file/d/1x-tbk1MFL4EBeVDXuDgm-dUAgMXhhDtd/view?usp=sharing)**
+▶ **[Watch the video walkthrough](https://drive.google.com/file/d/1liYW9LPehL76UQWAR--nYExdeGSOZCxY/view?usp=sharing)**
 
 > **Note:** this is a trimmed-down version of the natachke.com frontend, published to demonstrate the project and how its code is organised. Some packages, configuration and integrations used in production have been removed, so the repository is meant for reading rather than for running a full copy of the site.
 
